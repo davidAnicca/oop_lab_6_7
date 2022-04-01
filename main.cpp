@@ -6,7 +6,7 @@
 
 int main() {
     Tests tests;
-    tests.runAll();
+    Tests::runAll();
     Repo r;
     Service srv{r};
     Console cns{srv};

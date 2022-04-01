@@ -23,9 +23,9 @@ const std::vector<Movie>& Repo::getAll() const {
     return all;
 }
 
-const Movie& Repo::find(const std::string title, const int year) const{
+const Movie& Repo::find(const std::string& title, const int year) const{
     for(const auto& movie:all){
-        if(movie.title() == title, movie.year() == year)
+        if(movie.title() == title && movie.year() == year)
             return movie;
     }
     throw RepoException("nu exista");

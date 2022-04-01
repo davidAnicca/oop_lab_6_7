@@ -6,6 +6,7 @@
 #define LAB6_7_MOVIE_H
 
 #include <string>
+#include <iostream>
 
 class Movie {
 private:
@@ -18,8 +19,9 @@ public:
      * operatorul de atribuire (copiere)
      */
     Movie& operator=(const Movie& movie){
-        if(this == &movie)
+        if(this == &movie) {
             return *this;
+        }
         title_ = movie.title_;
         genre_ = movie.genre_;
         year_ = movie.year_;
@@ -54,7 +56,7 @@ public:
     /*
      * setter pt gen
      */
-    void set_genre(std::string);
+    void set_genre(const std::string&);
     /*
     * setter pt an
     */
@@ -62,12 +64,12 @@ public:
     /*
     * setter pt protagonist
     */
-    void set_protagonist(std::string);
+    void set_protagonist(const std::string&);
 
     /*
      * contructor pt film bazat pe parametri
      */
-    Movie(std::string, std::string, int, std::string);
+    Movie(std::string , std::string , int, std::string );
     /*
      * constructor copie
      */

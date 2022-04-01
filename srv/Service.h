@@ -12,17 +12,17 @@ class Service {
 private:
     Repo& repo;
 public:
-    Service(Repo& rep): repo{rep}{};
+    explicit Service(Repo& rep): repo{rep}{};
     Service(const Service& ot) = delete;
     /*
      * încearcă să adauge. aruncă excepție dacă nu se poate adăuga
      */
-    void add(const std::string, const std::string, const int, const std::string);
+    void add(const std::string&, const std::string&, int, const std::string&);
     /*
      * stergere dupa titlu si an
      * arunca exceptie daca nu exista
      */
-    void del(std::string, int);
+    void del(const std::string&, int);
     /*
      * modifica un film gasit dupa nume si an
      * se dau noile caracteristici

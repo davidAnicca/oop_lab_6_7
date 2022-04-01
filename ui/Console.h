@@ -18,7 +18,7 @@ private:
     /*
      * ui afisare
      */
-    void print(const std::vector<Movie>& movies);
+    static void print(const std::vector<Movie>& movies);
     /*
      * ui stergere
      */
@@ -29,7 +29,7 @@ private:
     void modify();
 
 public:
-    Console(Service& s): srv{s}{};
+    explicit Console(Service& s): srv{s}{};
     void run();
 };
 

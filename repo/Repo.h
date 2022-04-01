@@ -5,6 +5,7 @@
 #ifndef LAB6_7_REPO_H
 #define LAB6_7_REPO_H
 
+#include <utility>
 #include <vector>
 #include "../entitie/Movie.h"
 
@@ -30,7 +31,7 @@ public:
     /*
      * cauta după titlu și an. aruncă excepție dacă nu există
      */
-    const Movie& find(std::string, int) const;
+    const Movie& find(const std::string&, int) const;
     /*
      * sterge un film dat. aruncă excepție dacă nu a fost găsit
      */
@@ -41,10 +42,10 @@ public:
     void modify(Movie &m);
 };
 
-class RepoException {
+class RepoException: std::exception {
     std::string msg;
 public:
-    RepoException(const std::string m) :msg{ m } {}
+    explicit RepoException(std::string  m) :msg{std::move( m )} {}
     //functie friend (vreau sa folosesc membru privat msg)
     friend std::ostream& operator<<(std::ostream& out, const RepoException& ex);
 };

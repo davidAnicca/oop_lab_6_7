@@ -20,6 +20,7 @@ void Tests::runAll() {
 
     addSrvTest();
     delSrvTest();
+    modSrvTest();
     std::cout<<"tests ok";
 }
 
