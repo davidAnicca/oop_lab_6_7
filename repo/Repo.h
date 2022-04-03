@@ -13,17 +13,17 @@ class Repo {
 private:
     std::vector<Movie> all;
     /*
-     * spune dacă un film există sau nu în repo
+     * spune dacă un film există sau nu în repo_
      */
-    bool exist(const Movie &m) const;
+    bool exist(const Movie &movie) const;
 
 public:
     Repo() = default;
-    Repo(const Repo& ot) = delete;
+    Repo(const Repo& other) = delete;
     /*
      * adaugă un film. aruncă excepție dacă filmul există deja
      */
-    void add(const Movie &m);
+    void add(const Movie &movie);
     /*
      * returnează toate filmele
      */
@@ -31,15 +31,15 @@ public:
     /*
      * cauta după titlu și an. aruncă excepție dacă nu există
      */
-    const Movie& find(const std::string&, int) const;
+    const Movie& find(const std::string& title, int year) const;
     /*
      * sterge un film dat. aruncă excepție dacă nu a fost găsit
      */
-    void del(Movie &m);
+    void del(Movie &movie);
     /*
      * modifica un film dat. aruncă exceptie daca nu e
      */
-    void modify(Movie &m);
+    void modify(Movie &movie);
 };
 
 class RepoException: std::exception {

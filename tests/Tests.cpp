@@ -18,9 +18,11 @@ void Tests::runAll() {
     delRepoTest();
     modRepoTest();
 
+
     addSrvTest();
     delSrvTest();
     modSrvTest();
+    searchSrvTest();
     std::cout<<"tests ok";
 }
 
@@ -158,6 +160,25 @@ void Tests::modSrvTest() {
            && repo.find("enter the void", 2009).protagonist() == "osky");
     try{
         srv.mod("foo", 1, "foo", "foo");
+        assert(false);
+    }catch(RepoException&){
+        assert(true);
+    }
+}
+
+void Tests::searchSrvTest() {
+    Repo repo;
+    Movie m{"enter the void", "psychedelic", 2009, "Oscar"};
+    repo.add(m);
+    Movie m2{"La Double Vie De Veronique", "Drama", 1996, "Veronika"};
+    repo.add(m2);
+    Service srv{repo};
+    Movie found = srv.search("enter the void", 2009);
+    assert(found == m);
+    Movie found2 = srv.search("La Double Vie De Veronique", 1996);
+    assert(found2 == m2);
+    try{
+        srv.search("foo", 0);
         assert(false);
     }catch(RepoException&){
         assert(true);

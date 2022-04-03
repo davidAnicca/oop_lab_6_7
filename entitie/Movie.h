@@ -56,24 +56,24 @@ public:
     /*
      * setter pt gen
      */
-    void set_genre(const std::string&);
+    void set_genre(const std::string& genre);
     /*
     * setter pt an
     */
-    void set_year(int);
+    void set_year(int year);
     /*
     * setter pt protagonist
     */
-    void set_protagonist(const std::string&);
+    void set_protagonist(const std::string& protagonist);
 
     /*
      * contructor pt film bazat pe parametri
      */
-    Movie(std::string , std::string , int, std::string );
+    Movie(std::string title, std::string genre, int year, std::string protagonist);
     /*
      * constructor copie
      */
-    Movie(const Movie&);
+    Movie(const Movie& movie);
     /*
      * destructor
      */

@@ -8,7 +8,13 @@
 void Console::run() {
     while (true) {
         std::cout << "Meniu:\n";
-        std::cout << "1 adauga\n2 tipareste\n3 Stergere\n4 modifica\n0 Iesire\nDati comanda:";
+        std::cout << "1 adauga\n"
+                     "2 tipareste\n"
+                     "3 Stergere\n"
+                     "4 modifica\n"
+                     "5 cauta\n"
+                     "0 Iesire\n"
+                     "Dati comanda:";
         int cmd;
         std::cin >> cmd;
         try {
@@ -17,13 +23,16 @@ void Console::run() {
                     add();
                     break;
                 case 2:
-                    print(srv.getAll());
+                    print(srv_.getAll());
                     break;
                 case 3:
                     del();
                     break;
                 case 4:
                     modify();
+                    break;
+                case 5:
+                    search();
                     break;
                 case 0:
                     return;
@@ -47,6 +56,10 @@ void Console::print(const std::vector<Movie>& movies) {
     std::cout<<"Sfarsit\n";
 }
 
+void Console::printOne(const Movie& movie){
+    std::cout<<movie.title()<<"||"<<movie.genre()<<"||"<<movie.year()<<"||"<<movie.protagonist()<<"\n";
+}
+
 void Console::add() {
     std::string title, genre, protagonist;
     int year;
@@ -58,7 +71,7 @@ void Console::add() {
     std::cin>>year;
     std::cout<<"protagonist:\n";
     std::cin>>protagonist;
-    srv.add(title, genre, year, protagonist);
+    srv_.add(title, genre, year, protagonist);
 }
 
 void Console::del() {
@@ -68,7 +81,7 @@ void Console::del() {
     std::cin>>title;
     std::cout<<"an:";
     std::cin>>yea;
-    srv.del(title, yea);
+    srv_.del(title, yea);
 }
 
 void Console::modify() {
@@ -82,7 +95,17 @@ void Console::modify() {
     std::cin>>genre;
     std::cout<<"nou prot:";
     std::cin>>protagonist;
-    srv.mod(title, year, genre, protagonist);
+    srv_.mod(title, year, genre, protagonist);
+}
+
+void Console::search() {
+    std::string title;
+    int year;
+    std::cout<<"titlu>>";
+    std::cin>>title;
+    std::cout<<"an>>";
+    std::cin>>year;
+    printOne(srv_.search(title, year));
 }
 
 

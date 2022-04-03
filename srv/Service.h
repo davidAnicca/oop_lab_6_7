@@ -10,25 +10,37 @@
 
 class Service {
 private:
-    Repo& repo;
+    Repo& repo_;
 public:
-    explicit Service(Repo& rep): repo{rep}{};
-    Service(const Service& ot) = delete;
+    explicit Service(Repo& repo): repo_{repo}{};
+    Service(const Service& other) = delete;
     /*
      * încearcă să adauge. aruncă excepție dacă nu se poate adăuga
      */
-    void add(const std::string&, const std::string&, int, const std::string&);
+    void add(const std::string& title,
+             const std::string& genre,
+             int year,
+             const std::string& protagonist);
     /*
      * stergere dupa titlu si an
      * arunca exceptie daca nu exista
      */
-    void del(const std::string&, int);
+    void del(const std::string& title,
+             int year);
     /*
      * modifica un film gasit dupa nume si an
      * se dau noile caracteristici
      */
-    void mod(std::string, int, std::string, std::string);
+    void mod(std::string title,
+             int year,
+             std::string newGenre,
+             std::string newProtagonist);
+
     const std::vector<Movie>& getAll() noexcept;
+    /*
+     * caută un film după titlu și an. aruncă excepție dacă nu există
+     */
+    const Movie& search(const std::string& title, int year);
 };
 
 

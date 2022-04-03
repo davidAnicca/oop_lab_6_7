@@ -10,20 +10,21 @@ class Tests {
 public:
     static void runAll() ;
 private:
-    static void createDestroyTest() ;
     /*
-     * repo tests:
+     * repo_ tests:
      */
     static void addRepoTest();
+    static void createDestroyTest() ;
     static void delRepoTest();
     static void modRepoTest();
 
     /*
-     *srv tests:
+     *srv_ tests:
      */
     static void addSrvTest();
     static void delSrvTest();
     static void modSrvTest();
+    static void searchSrvTest();
 };
 
 

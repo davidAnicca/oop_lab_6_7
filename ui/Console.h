@@ -10,7 +10,7 @@
 
 class Console {
 private:
-    Service& srv;
+    Service& srv_;
     /*
      * ui adăugare
      */
@@ -27,9 +27,17 @@ private:
      * ui modifcare
      */
     void modify();
-
+    /*
+     * ui căutare
+     */
+    void search();
+    /*
+     * printează un singur film
+     */
+    void printOne(const Movie &movie);
 public:
-    explicit Console(Service& s): srv{s}{};
+    explicit Console(Service& srv): srv_{srv}{};
+
     void run();
 };
 

@@ -9,21 +9,25 @@
 void Service::add(const std::string& title, const std::string& genre, const int year, const std::string& protagonist) {
 
     Movie m{title, genre, year, protagonist};
-    repo.add(m);
+    repo_.add(m);
 }
 
 const std::vector<Movie>& Service::getAll() noexcept{
-    return repo.getAll();
+    return repo_.getAll();
 }
 
 void Service::del(const std::string& title, int year) {
-    Movie m = repo.find(title, year);
-    repo.del(m);
+    Movie m = repo_.find(title, year);
+    repo_.del(m);
 }
 
 void Service::mod(std::string title, int year, std::string genre, std::string protagonist) {
     Movie m{std::move(title), std::move(genre), year, std::move(protagonist)};
-    repo.modify(m);
+    repo_.modify(m);
+}
+
+const Movie &Service::search(const std::string& title, int year) {
+    return repo_.find(title, year);
 }
 
 
