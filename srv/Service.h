@@ -6,6 +6,7 @@
 #define LAB6_7_SERVICE_H
 
 
+#include <functional>
 #include "../repo/Repo.h"
 
 class Service {
@@ -40,7 +41,13 @@ public:
     /*
      * caută un film după titlu și an. aruncă excepție dacă nu există
      */
-    const Movie& search(const std::string& title, int year);
+    const Movie& search(const std::string& title, int year) const;
+
+    std::vector<Movie> filter(std::function<bool(const Movie &)> condition) const;
+
+    std::vector<Movie> filterByYear(int year) const;
+
+    std::vector<Movie> filterByTitle(const std::string& title) const;
 };
 
 

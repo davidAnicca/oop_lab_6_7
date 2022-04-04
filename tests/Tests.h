@@ -25,6 +25,9 @@ private:
     static void delSrvTest();
     static void modSrvTest();
     static void searchSrvTest();
+    static void nameFilterTest();
+    static void yearFilterTest();
+
 };
 
 

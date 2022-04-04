@@ -23,6 +23,8 @@ void Tests::runAll() {
     delSrvTest();
     modSrvTest();
     searchSrvTest();
+    yearFilterTest();
+    nameFilterTest();
     std::cout<<"tests ok";
 }
 
@@ -182,5 +184,37 @@ void Tests::searchSrvTest() {
         assert(false);
     }catch(RepoException&){
         assert(true);
+    }
+}
+
+void Tests::yearFilterTest() {
+    Repo repo;
+    Service srv{repo};
+    for(int i = 0; i < 100; i++){
+        std::stringstream ss;
+        ss << i;
+        std::string title = ss.str();
+        srv.add(title, "f00", i%6, "f0o");
+    }
+    std::vector<Movie> filtered = srv.filterByYear(5);
+    assert(!filtered.empty());
+    for(const auto& movie : filtered){
+        assert(movie.year() == 5);
+    }
+}
+
+void Tests::nameFilterTest() {
+    Repo repo;
+    Service srv{repo};
+    for(int i = 0; i < 100; i++){
+        std::stringstream ss;
+        ss << i%6;
+        std::string title = ss.str();
+        srv.add(title, "f00", i, "f0o");
+    }
+    std::vector<Movie> filtered = srv.filterByTitle("5");
+    assert(!filtered.empty());
+    for(const auto& movie : filtered){
+        assert(movie.title() == "5");
     }
 }
