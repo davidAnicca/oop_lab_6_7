@@ -42,14 +42,14 @@ public:
     void modify(Movie &movie);
 };
 
-class RepoException: std::exception {
+class repoException: std::exception {
     std::string msg;
 public:
-    explicit RepoException(std::string  m) :msg{std::move( m )} {}
+    explicit repoException(std::string  m) : msg{std::move(m )} {}
     //functie friend (vreau sa folosesc membru privat msg)
-    friend std::ostream& operator<<(std::ostream& out, const RepoException& ex);
+    friend std::ostream& operator<<(std::ostream& out, const repoException& ex);
 };
 
-std::ostream& operator<<(std::ostream& out, const RepoException& ex);
+std::ostream& operator<<(std::ostream& out, const repoException& ex);
 
 #endif //LAB6_7_REPO_H

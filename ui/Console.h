@@ -38,6 +38,7 @@ private:
 public:
     explicit Console(Service& srv): srv_{srv}{};
 
+    static int readInt();
     void run();
 };
 

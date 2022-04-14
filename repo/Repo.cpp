@@ -8,14 +8,14 @@ bool Repo::exist(const Movie &m) const {
     try{
         find(m.title(), m.year());
         return true;
-    }catch(RepoException&){
+    }catch(repoException&){
         return false;
     }
 }
 
 void Repo::add(const Movie &m) {
     if(exist(m))
-        throw RepoException("deja exista");
+        throw repoException("deja exista");
     all.add(m);
 }
 
@@ -29,12 +29,12 @@ const Movie& Repo::find(const std::string& title, const int year) const{
         if(movie.title() == title && movie.year() == year)
             return movie;
     }
-    throw RepoException("nu exista");
+    throw repoException("nu exista");
 }
 
 void Repo::del(Movie &m) {
     if(!exist(m))
-        throw RepoException("nu există");
+        throw repoException("nu există");
     for(int i = 0; i < all.size(); i++){
         if(all.get(i) == m){
             all.erase(i);
@@ -45,7 +45,7 @@ void Repo::del(Movie &m) {
 
 void Repo::modify(Movie& movie) {
     if(!exist(movie))
-        throw RepoException("nu exista");
+        throw repoException("nu exista");
     for(int i = 0; i < all.size(); i++){
         Movie m = all.get(i);
         if(m == movie){
@@ -56,7 +56,7 @@ void Repo::modify(Movie& movie) {
 }
 
 
-std::ostream &operator<<(std::ostream &out, const RepoException &ex) {
+std::ostream &operator<<(std::ostream &out, const repoException &ex) {
     out << ex.msg;
     return out;
 }

@@ -64,7 +64,7 @@ void Tests::addRepoTest() {
     try{
         repo.add(m);
         assert(false);
-    }catch(RepoException& e){
+    }catch(repoException& e){
         assert(true);
     }
     //cauta inexistent
@@ -72,7 +72,7 @@ void Tests::addRepoTest() {
         repo.find("c", 1990);
         assert(false);
     }
-    catch (const RepoException& e) {
+    catch (const repoException& e) {
         std::stringstream os;
         os << e;
         assert(os.str().find("nu exista")>=0);
@@ -88,7 +88,7 @@ void Tests::addSrvTest() {
         ///adăugare multiplă
         srv.add("Enter The Void", "a", 2009, "a");
         assert(false);
-    }catch(RepoException&){
+    }catch(repoException&){
         assert(true);
     }
 }
@@ -106,7 +106,7 @@ void Tests::delRepoTest() {
     try{
         repo.del(m);
         assert(false);
-    }catch(RepoException&){
+    }catch(repoException&){
         assert(true);
     }
 
@@ -126,7 +126,7 @@ void Tests::delSrvTest() {
     try{
         srv.del("foo", 1);
         assert(false);
-    }catch(RepoException&){
+    }catch(repoException&){
         assert(true);
     }
 }
@@ -145,7 +145,7 @@ void Tests::modRepoTest() {
         Movie mm{"foo", "foo", 1, "foo"};
         repo.modify(mm);
         assert(false);
-    }catch(RepoException&){
+    }catch(repoException&){
         assert(true);
     }
 }
@@ -163,7 +163,7 @@ void Tests::modSrvTest() {
     try{
         srv.mod("foo", 1, "foo", "foo");
         assert(false);
-    }catch(RepoException&){
+    }catch(repoException&){
         assert(true);
     }
 }
@@ -182,7 +182,7 @@ void Tests::searchSrvTest() {
     try{
         srv.search("foo", 0);
         assert(false);
-    }catch(RepoException&){
+    }catch(repoException&){
         assert(true);
     }
 }

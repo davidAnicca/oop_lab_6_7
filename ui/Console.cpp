@@ -19,7 +19,7 @@ void Console::run() {
                      "0 Iesire\n"
                      "Dati comanda:";
         int cmd;
-        std::cin >> cmd;
+        cmd = readInt();
 
         try {
             switch (cmd) {
@@ -44,7 +44,7 @@ void Console::run() {
                     std::cout << "Comanda invalida\n";
             }
         }
-        catch (const RepoException &ex) {
+        catch (const repoException &ex) {
             std::cout << ex << '\n';
         }
     }
@@ -75,7 +75,8 @@ void Console::add() {
     std::cout<<"gen:\n";
     std::cin>>genre;
     std::cout<<"an:\n";
-    std::cin>>year;
+    year = readInt();
+    if(year == -1){std::cout<<"trebuie numar!! mai incearca\n";add();return;}
     std::cout<<"protagonist:\n";
     std::cin>>protagonist;
     srv_.add(title, genre, year, protagonist);
@@ -86,8 +87,8 @@ void Console::del() {
     int yea;
     std::cout<<"title:";
     std::cin>>title;
-    std::cout<<"an:";
-    std::cin>>yea;
+    yea = readInt();
+    if(yea == -1){std::cout<<"trebuie numar!! mai incearca\n";del();return;}
     srv_.del(title, yea);
 }
 
@@ -97,7 +98,8 @@ void Console::modify() {
     std::cout<<"title:";
     std::cin>>title;
     std::cout<<"an:";
-    std::cin>>year;
+    year = readInt();
+    if(year == -1){std::cout<<"trebuie numar!! mai incearca\n";modify();return;}
     std::cout<<"nou gen:";
     std::cin>>genre;
     std::cout<<"nou prot:";
@@ -111,8 +113,21 @@ void Console::search() {
     std::cout<<"titlu>>";
     std::cin>>title;
     std::cout<<"an>>";
-    std::cin>>year;
+    year = readInt();
+    if(year == -1){std::cout<<"trebuie numar!! mai incearca\n";search();return;}
     printOne(srv_.search(title, year));
+}
+
+int Console::readInt() {
+    std::string str;
+    std::cin>>str;
+    int num = 0;
+    for(char c:str){
+        if(c < '0' || c > '9')
+            return -1;
+        num += c - '0';
+    }
+    return num;
 }
 
 
