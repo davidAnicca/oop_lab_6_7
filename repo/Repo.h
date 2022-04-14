@@ -5,13 +5,13 @@
 #ifndef LAB6_7_REPO_H
 #define LAB6_7_REPO_H
 
-#include <utility>
-#include <vector>
+///#include <utility>
+#include "../vector/Vector.h"
 #include "../entitie/Movie.h"
 
 class Repo {
 private:
-    std::vector<Movie> all;
+    Vector<Movie> all;
     /*
      * spune dacă un film există sau nu în repo_
      */
@@ -27,13 +27,13 @@ public:
     /*
      * returnează toate filmele
      */
-    const std::vector<Movie>& getAll() const;
+    const Vector<Movie>& getAll() const;
     /*
      * cauta după titlu și an. aruncă excepție dacă nu există
      */
     const Movie& find(const std::string& title, int year) const;
     /*
-     * sterge un film dat. aruncă excepție dacă nu a fost găsit
+     * erase un film dat. aruncă excepție dacă nu a fost găsit
      */
     void del(Movie &movie);
     /*

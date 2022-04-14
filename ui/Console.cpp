@@ -3,7 +3,10 @@
 //
 
 #include <iostream>
+#include "../vector/Vector.h"
 #include "Console.h"
+
+
 
 void Console::run() {
     while (true) {
@@ -17,6 +20,7 @@ void Console::run() {
                      "Dati comanda:";
         int cmd;
         std::cin >> cmd;
+
         try {
             switch (cmd) {
                 case 1:
@@ -46,12 +50,15 @@ void Console::run() {
     }
 }
 
-void Console::print(const std::vector<Movie>& movies) {
-    if(movies.empty())
+void Console::print(const Vector<Movie>& movies) {
+    if(movies.size() == 0)
         return;
     std::cout<<"Filme\n";
-    for(auto& movie:movies){
+    iteratorVector<Movie> it{movies};
+    while(it.valid()){
+        auto& movie = it.element();
         std::cout<<movie.title()<<"||"<<movie.genre()<<"||"<<movie.year()<<"||"<<movie.protagonist()<<"\n";
+        it.next();
     }
     std::cout<<"Sfarsit\n";
 }

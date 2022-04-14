@@ -18,7 +18,7 @@ private:
     /*
      * ui afisare
      */
-    static void print(const std::vector<Movie>& movies);
+    static void print(const Vector<Movie>& movies);
     /*
      * ui stergere
      */

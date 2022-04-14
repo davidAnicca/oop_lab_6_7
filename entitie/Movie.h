@@ -65,7 +65,7 @@ public:
     * setter pt protagonist
     */
     void set_protagonist(const std::string& protagonist);
-
+    Movie()=default;
     /*
      * contructor pt film bazat pe parametri
      */

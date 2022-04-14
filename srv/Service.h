@@ -37,17 +37,17 @@ public:
              std::string newGenre,
              std::string newProtagonist);
 
-    const std::vector<Movie>& getAll() noexcept;
+    const Vector<Movie>& getAll() noexcept;
     /*
      * caută un film după titlu și an. aruncă excepție dacă nu există
      */
     const Movie& search(const std::string& title, int year) const;
 
-    std::vector<Movie> filter(std::function<bool(const Movie &)> condition) const;
+    Vector<Movie> filter(std::function<bool(const Movie &)> condition) const;
 
-    std::vector<Movie> filterByYear(int year) const;
+    Vector<Movie> filterByYear(int year) const;
 
-    std::vector<Movie> filterByTitle(const std::string& title) const;
+    Vector<Movie> filterByTitle(const std::string& title) const;
 };
 
 
