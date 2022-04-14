@@ -5,6 +5,7 @@
 #include "ui/Console.h"
 
 int main() {
+
     Tests tests;
     Tests::runAll();
     Repo r;
