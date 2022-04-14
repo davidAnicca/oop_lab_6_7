@@ -19,9 +19,10 @@ void Console::run() {
                      "0 Iesire\n"
                      "Dati comanda:";
         int cmd;
-        cmd = readInt();
+
 
         try {
+            cmd = readInt();
             switch (cmd) {
                 case 1:
                     add();
@@ -45,6 +46,8 @@ void Console::run() {
             }
         }
         catch (const repoException &ex) {
+            std::cout << ex << '\n';
+        }catch (const uiException &ex){
             std::cout << ex << '\n';
         }
     }
@@ -114,7 +117,7 @@ void Console::search() {
     std::cin>>title;
     std::cout<<"an>>";
     year = readInt();
-    if(year == -1){std::cout<<"trebuie numar!! mai incearca\n";search();return;}
+
     printOne(srv_.search(title, year));
 }
 
@@ -124,11 +127,18 @@ int Console::readInt() {
     int num = 0;
     for(char c:str){
         if(c < '0' || c > '9')
-            return -1;
+            throw uiException("trebuie introdus un numar!");
         num += c - '0';
     }
     return num;
 }
+
+
+std::ostream &operator<<(std::ostream &out, const uiException &ex) {
+    out << ex.msg;
+    return out;
+}
+
 
 
 
