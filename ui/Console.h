@@ -2,8 +2,8 @@
 // Created by david on 28.03.2022.
 //
 
-#ifndef LAB6_7_CONSOLE_H
-#define LAB6_7_CONSOLE_H
+#ifndef HABITAT_CONSOLE_H
+#define HABITAT_CONSOLE_H
 
 
 #include "../srv/Service.h"
@@ -31,15 +31,17 @@ private:
      * ui căutare
      */
     void search();
-    /*
-     * printează un singur film
-     */
-    static void printOne(const Movie &movie);
+
 public:
     explicit Console(Service& srv): srv_{srv}{};
 
     static int readInt();
     void run();
+
+/*
+ * printează un singur film
+ */
+static void printOne(const Movie &movie);
 };
 
 class uiException: std::exception {
@@ -53,4 +55,4 @@ public:
 std::ostream& operator<<(std::ostream& out, const uiException& ex);
 
 
-#endif //LAB6_7_CONSOLE_H
+#endif //HABITAT_CONSOLE_H

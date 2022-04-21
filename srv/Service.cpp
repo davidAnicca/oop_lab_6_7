@@ -5,6 +5,7 @@
 #include "Service.h"
 #include "../repo/Repo.h"
 #include "algorithm"
+#include "Console.h"
 #include <utility>
 void Service::add(const std::string& title, const std::string& genre, const int year, const std::string& protagonist) {
 
@@ -47,6 +48,26 @@ vector<Movie> Service::filterByTitle(const std::string& title) const{
     return filter([=](const Movie& movie){
         return movie.title() == title;
     });
+}
+
+void Service::addCart(const std::string &title, int year) {
+    Movie m = repo_.find(title, year);
+    cart_.add(m);
+}
+
+void Service::emptyCart() {
+    cart_.del();
+}
+
+int Service::cartSize() {
+    return cart_.getAll().size();
+}
+
+void Service::exportCart() {
+///todo
+    for(const auto& movie: cart_.getAll()){
+        Console::printOne(movie);
+    }
 }
 
 

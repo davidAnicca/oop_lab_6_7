@@ -3,6 +3,7 @@
 //
 
 #include <cassert>
+#include "../repo/cart/Cart.h"
 #include <iostream>
 #include <sstream>
 #include "Tests.h"
@@ -81,7 +82,8 @@ void Tests::addRepoTest() {
 
 void Tests::addSrvTest() {
     Repo r;
-    Service srv{r};
+    Cart c;
+    Service srv{r, c};
     srv.add("Enter The Void", "Psychedelic", 2009, "Oscar");
     assert(r.getAll().size() == 1);
     try{
@@ -102,7 +104,7 @@ void Tests::delRepoTest() {
     repo.del(m);
     assert(repo.getAll().size() ==1);
     repo.del(m2);
-    assert(repo.getAll().size()==0);
+    assert(repo.getAll().empty());
     try{
         repo.del(m);
         assert(false);
@@ -118,11 +120,12 @@ void Tests::delSrvTest() {
     repo.add(m);
     Movie m2{"La Double Vie De Veronique", "Drama", 1996, "Veronika"};
     repo.add(m2);
-    Service srv{repo};
+    Cart c;
+    Service srv{repo, c};
     srv.del("enter the void", 2009);
     assert(srv.getAll().size() == 1);
     srv.del("La Double Vie De Veronique", 1996);
-    assert(srv.getAll().size()==0);
+    assert(srv.getAll().empty());
     try{
         srv.del("foo", 1);
         assert(false);
@@ -156,7 +159,8 @@ void Tests::modSrvTest() {
     repo.add(m);
     Movie m2{"La Double Vie De Veronique", "Drama", 1996, "Veronika"};
     repo.add(m2);
-    Service srv{repo};
+    Cart c;
+    Service srv{repo, c};
     srv.mod("enter the void", 2009, "psy", "osky");
     assert(repo.find("enter the void", 2009).genre() == "psy"
            && repo.find("enter the void", 2009).protagonist() == "osky");
@@ -174,7 +178,8 @@ void Tests::searchSrvTest() {
     repo.add(m);
     Movie m2{"La Double Vie De Veronique", "Drama", 1996, "Veronika"};
     repo.add(m2);
-    Service srv{repo};
+    Cart c;
+    Service srv{repo, c};
     Movie found = srv.search("enter the void", 2009);
     assert(found == m);
     Movie found2 = srv.search("La Double Vie De Veronique", 1996);
@@ -189,7 +194,8 @@ void Tests::searchSrvTest() {
 
 void Tests::yearFilterTest() {
     Repo repo;
-    Service srv{repo};
+    Cart c;
+    Service srv{repo, c};
     for(int i = 0; i < 100; i++){
         std::stringstream ss;
         ss << i;
@@ -206,7 +212,8 @@ void Tests::yearFilterTest() {
 
 void Tests::nameFilterTest() {
     Repo repo;
-    Service srv{repo};
+    Cart c;
+    Service srv{repo, c};
     for(int i = 0; i < 100; i++){
         std::stringstream ss;
         ss << i%6;
@@ -214,7 +221,7 @@ void Tests::nameFilterTest() {
         srv.add(title, "f00", i, "f0o");
     }
     vector<Movie> filtered = srv.filterByTitle("5");
-    assert(filtered.size()!=0);
+    assert(!filtered.empty());
     for(const auto & i : filtered){
         assert(i.title() == "5");
     }

@@ -4,14 +4,17 @@
 #include "srv/Service.h"
 #include "tests/VectorTests.h"
 #include "ui/Console.h"
+#include "repo/cart/cartTest.cpp"
+#include "srv/CartTestsSrv.cpp"
 
 int main() {
-
-    Tests tests;
     Tests::runAll();
-    VectorTests::runAll();
+    ///VectorTests::runAll();
+    cartTest::runALl();
+    cartTestSrv::runALl();
     Repo r;
-    Service srv{r};
+    Cart c;
+    Service srv{r, c};
     Console cns{srv};
     cns.run();
     return 0;
