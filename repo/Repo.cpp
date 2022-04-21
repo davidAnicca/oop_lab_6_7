@@ -16,16 +16,16 @@ bool Repo::exist(const Movie &m) const {
 void Repo::add(const Movie &m) {
     if(exist(m))
         throw repoException("deja exista");
-    all.add(m);
+    all.push_back(m);
 }
 
-const Vector<Movie>& Repo::getAll() const {
+const vector<Movie>& Repo::getAll() const {
     return all;
 }
 
 const Movie& Repo::find(const std::string& title, const int year) const{
-    for(int i = 0; i < all.size(); i++){
-        Movie& movie = all.get(i);
+    for(auto& m : all){
+        const Movie& movie = m;
         if(movie.title() == title && movie.year() == year)
             return movie;
     }
@@ -36,8 +36,8 @@ void Repo::del(Movie &m) {
     if(!exist(m))
         throw repoException("nu există");
     for(int i = 0; i < all.size(); i++){
-        if(all.get(i) == m){
-            all.erase(i);
+        if(all[i] == m){
+            all.erase(all.begin() +i);
             return;
         }
     }
@@ -46,10 +46,10 @@ void Repo::del(Movie &m) {
 void Repo::modify(Movie& movie) {
     if(!exist(movie))
         throw repoException("nu exista");
-    for(int i = 0; i < all.size(); i++){
-        Movie m = all.get(i);
+    for(auto & i : all){
+        Movie m = i;
         if(m == movie){
-            all.set(i, movie);
+            i = movie;
             return;
         }
     }

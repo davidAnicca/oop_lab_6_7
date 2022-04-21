@@ -53,16 +53,11 @@ void Console::run() {
     }
 }
 
-void Console::print(const Vector<Movie>& movies) {
-    if(movies.size() == 0)
+void Console::print(const vector<Movie>& movies) {
+    if(movies.empty())
         return;
     std::cout<<"Filme\n";
-    iteratorVector<Movie> it{movies};
-    while(it.valid()){
-        auto& movie = it.element();
-        std::cout<<movie.title()<<"||"<<movie.genre()<<"||"<<movie.year()<<"||"<<movie.protagonist()<<"\n";
-        it.next();
-    }
+    for (const auto &movie: movies)Console::printOne(movie);
     std::cout<<"Sfarsit\n";
 }
 
@@ -79,7 +74,7 @@ void Console::add() {
     std::cin>>genre;
     std::cout<<"an:\n";
     year = readInt();
-    if(year == -1){std::cout<<"trebuie numar!! mai incearca\n";add();return;}
+    if(year == -1){std::cout<<"trebuie numar!! mai incearca\n";return;}
     std::cout<<"protagonist:\n";
     std::cin>>protagonist;
     srv_.add(title, genre, year, protagonist);
@@ -91,7 +86,7 @@ void Console::del() {
     std::cout<<"title:";
     std::cin>>title;
     yea = readInt();
-    if(yea == -1){std::cout<<"trebuie numar!! mai incearca\n";del();return;}
+    if(yea == -1){std::cout<<"trebuie numar!! mai incearca\n";return;}
     srv_.del(title, yea);
 }
 
@@ -102,7 +97,7 @@ void Console::modify() {
     std::cin>>title;
     std::cout<<"an:";
     year = readInt();
-    if(year == -1){std::cout<<"trebuie numar!! mai incearca\n";modify();return;}
+    if(year == -1){std::cout<<"trebuie numar!! mai incearca\n";return;}
     std::cout<<"nou gen:";
     std::cin>>genre;
     std::cout<<"nou prot:";

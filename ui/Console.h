@@ -18,7 +18,7 @@ private:
     /*
      * ui afisare
      */
-    static void print(const Vector<Movie>& movies);
+    static void print(const vector<Movie>& movies);
     /*
      * ui stergere
      */
@@ -34,7 +34,7 @@ private:
     /*
      * printează un singur film
      */
-    void printOne(const Movie &movie);
+    static void printOne(const Movie &movie);
 public:
     explicit Console(Service& srv): srv_{srv}{};
 

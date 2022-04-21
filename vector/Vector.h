@@ -211,10 +211,10 @@ void Vector<ElementT>::erase(int poz) {
 }
 
 template<typename ElementT>
-iteratorVector<ElementT>::iteratorVector(const Vector<ElementT>& v) noexcept:v{v } {poz=0;}
+iteratorVector<ElementT>::iteratorVector(const Vector<ElementT>& v) noexcept:v{v}{}
 
 template<typename ElementT>
-iteratorVector<ElementT>::iteratorVector(const Vector<ElementT>& v, int poz)noexcept : v{v }, poz{poz } {}
+iteratorVector<ElementT>::iteratorVector(const Vector<ElementT>& v, int poz)noexcept : v{v }, poz{poz} {}
 
 template<typename ElementT>
 bool iteratorVector<ElementT>::valid()const {
@@ -249,7 +249,7 @@ bool iteratorVector<ElementT>::operator==(const iteratorVector<ElementT>& ot) no
 
 template<typename ElementT>
 bool iteratorVector<ElementT>::operator!=(const iteratorVector<ElementT>& ot)noexcept {
-    return *this != ot;
+    return !(*this == ot);
 }
 
 

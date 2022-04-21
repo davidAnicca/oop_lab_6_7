@@ -4,7 +4,7 @@
 
 #include "Service.h"
 #include "../repo/Repo.h"
-
+#include "algorithm"
 #include <utility>
 void Service::add(const std::string& title, const std::string& genre, const int year, const std::string& protagonist) {
 
@@ -12,7 +12,7 @@ void Service::add(const std::string& title, const std::string& genre, const int 
     repo_.add(m);
 }
 
-const Vector<Movie>& Service::getAll() noexcept{
+const vector<Movie>& Service::getAll() noexcept{
     return repo_.getAll();
 }
 
@@ -30,23 +30,20 @@ const Movie &Service::search(const std::string& title, int year) const{
     return repo_.find(title, year);
 }
 
-Vector<Movie> Service::filter(std::function<bool(const Movie &)> condition) const {
-    Vector<Movie> filtered;
-    Vector<Movie> all{repo_.getAll()};
-    for(const auto& movie:all){
-        if(condition(movie))
-            filtered.add(movie);
-    }
+vector<Movie> Service::filter(const std::function<bool(const Movie &)>& condition) const {
+    vector<Movie> filtered;
+    vector<Movie> all{repo_.getAll()};
+    copy_if(all.begin(), all.end(), filtered.begin(), condition);
     return filtered;
 }
 
-Vector<Movie> Service::filterByYear(int year) const{
+vector<Movie> Service::filterByYear(int year) const{
     return filter([=](const Movie& movie){
        return movie.year() == year;
     });
 }
 
-Vector<Movie> Service::filterByTitle(const std::string& title) const{
+vector<Movie> Service::filterByTitle(const std::string& title) const{
     return filter([=](const Movie& movie){
         return movie.title() == title;
     });

@@ -8,10 +8,12 @@
 ///#include <utility>
 #include "../vector/Vector.h"
 #include "../entitie/Movie.h"
+#include "vector"
+using std::vector;
 
 class Repo {
 private:
-    Vector<Movie> all;
+    vector<Movie> all;
     /*
      * spune dacă un film există sau nu în repo_
      */
@@ -27,7 +29,7 @@ public:
     /*
      * returnează toate filmele
      */
-    const Vector<Movie>& getAll() const;
+    const vector<Movie>& getAll() const;
     /*
      * cauta după titlu și an. aruncă excepție dacă nu există
      */

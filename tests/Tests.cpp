@@ -196,11 +196,8 @@ void Tests::yearFilterTest() {
         std::string title = ss.str();
         srv.add(title, "f00", i%6, "f0o");
     }
-    Vector<Movie> filtered = srv.filterByYear(5);
-    assert(filtered.size()!=0);
-    for(int i = 0; i < filtered.size(); i++){
-        assert(filtered.get(i).year() == 5);
-    }
+    vector<Movie> filtered = srv.filterByYear(5);
+    assert(!filtered.empty());
     for(const auto& movie : filtered){
         assert(movie.year() == 5);
     }
@@ -216,13 +213,9 @@ void Tests::nameFilterTest() {
         std::string title = ss.str();
         srv.add(title, "f00", i, "f0o");
     }
-    Vector<Movie> filtered = srv.filterByTitle("5");
+    vector<Movie> filtered = srv.filterByTitle("5");
     assert(filtered.size()!=0);
-    for(int i = 0; i < filtered.size(); i++){
-        assert(filtered.get(i).title() == "5");
-    }
-    for(const auto& movie : filtered){
-        std::cout<<&movie;
-        assert(movie.title() == "5");
+    for(const auto & i : filtered){
+        assert(i.title() == "5");
     }
 }
