@@ -71,4 +71,14 @@ public:
 
 };
 
+class fileException: std::exception {
+    std::string msg;
+public:
+    explicit fileException(std::string  m) : msg{std::move(m )} {}
+    //functie friend (vreau sa folosesc membru privat msg)
+    friend std::ostream& operator<<(std::ostream& out, const fileException& ex);
+};
+
+std::ostream& operator<<(std::ostream& out, const fileException& ex);
+
 #endif //LAB6_7_SERVICE_H

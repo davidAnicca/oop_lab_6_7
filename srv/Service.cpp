@@ -65,7 +65,29 @@ int Service::cartSize() {
 }
 
 void Service::importCart(const std::string& fileName) {
-
+    std::ifstream fileStream(fileName);
+    if(!fileStream.is_open()){
+        throw fileException("A aparut o eroare la import\n"
+                            "Cel mai probabil fisierul nu a putut fi deschis sau acesta nu exista:(");
+    }
+    std::string title, genre, protagonist;
+    int year;
+    int nr=0;
+    while(fileStream>>title
+    && fileStream>>genre
+    && fileStream>>year
+    && fileStream>>protagonist){
+        try{
+            addCart(title, year);
+        }catch(repoException &R){
+            nr++;
+        }
+    }
+    fileStream.close();
+    if(nr > 0){
+        throw fileException("cateva filme nu au putut fi adaugate\n"
+                            "cel mai probabil ele nu mai exista în magazin");
+    }
 }
 
 void Service::exportCart(const std:: string& fileName) {
@@ -77,4 +99,7 @@ void Service::exportCart(const std:: string& fileName) {
 }
 
 
-
+std::ostream &operator<<(std::ostream &out, const fileException &ex) {
+    out<<ex.msg;
+    return out;
+}
