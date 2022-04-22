@@ -15,6 +15,14 @@ int main() {
     Repo r;
     Cart c;
     Service srv{r, c};
+    /*
+     * Hardcodez niste filme
+     */
+    srv.add("EnterTheVoid", "Psy", 1990, "Oscar");
+    srv.add("LaDoubleVieDeVeroniqe", "Oniric", 1969, "Veronika");
+    srv.add("ZazieDansLeMetro", "Adventure", 1960, "PetiteZazie");
+    srv.add("LaBelleVerte", "Politc", 1970, "Marie");
+    srv.add("PortocalaMecanica", "Oniric", 1960, "Marcel");
     Console cns{srv};
     cns.run();
     return 0;

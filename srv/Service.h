@@ -65,7 +65,9 @@ public:
 
     int cartSize();
 
-    void exportCart();
+    void exportCart(const std::string& fileName);
+
+    void importCart(const std::string& fileName);
 
 };
 

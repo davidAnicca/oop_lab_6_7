@@ -31,6 +31,22 @@ private:
      * ui căutare
      */
     void search();
+    /*
+     * adaugare în coș
+     */
+    void addToCart();
+    /*
+     * golire cos
+     */
+    void emptyCart();
+    /*
+     * exporta cos
+     */
+    void exportCart();
+    /*
+     * importa cos
+     */
+    void importCart();
 
 public:
     explicit Console(Service& srv): srv_{srv}{};

@@ -7,6 +7,7 @@
 #include "algorithm"
 #include "Console.h"
 #include <utility>
+#include <fstream>
 void Service::add(const std::string& title, const std::string& genre, const int year, const std::string& protagonist) {
 
     Movie m{title, genre, year, protagonist};
@@ -63,11 +64,16 @@ int Service::cartSize() {
     return cart_.getAll().size();
 }
 
-void Service::exportCart() {
-///todo
-    for(const auto& movie: cart_.getAll()){
-        Console::printOne(movie);
+void Service::importCart(const std::string& fileName) {
+
+}
+
+void Service::exportCart(const std:: string& fileName) {
+    std:: ofstream fileStream(fileName);
+    for(const auto& movie : cart_.getAll()){
+        fileStream<<movie.title()<<" "<<movie.genre()<<" "<<movie.year()<<" "<<movie.protagonist()<<"\n";
     }
+    fileStream.close();
 }
 
 
