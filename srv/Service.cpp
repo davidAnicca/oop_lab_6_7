@@ -10,6 +10,8 @@
 #include <algorithm>
 #include <random> // std::default_random_engine
 #include <chrono>
+#include <sstream>
+
 void Service::add(const std::string& title, const std::string& genre, const int year, const std::string& protagonist) {
 
     Movie m{title, genre, year, protagonist};
@@ -37,7 +39,12 @@ const Movie &Service::search(const std::string& title, int year) const{
 vector<Movie> Service::filter(const std::function<bool(const Movie &)>& condition) const {
     vector<Movie> filtered;
     vector<Movie> all{repo_.getAll()};
-    copy_if(all.begin(), all.end(), filtered.begin(), condition);
+    ///copy_if(all.begin(), all.end(), filtered.begin(), condition);
+    for(const auto& movie: all){
+        if(condition(movie)){
+            filtered.push_back(movie);
+        }
+    }
     return filtered;
 }
 
@@ -72,13 +79,14 @@ void Service::importCart(const std::string& fileName) {
         throw fileException("A aparut o eroare la import\n"
                             "Cel mai probabil fisierul nu a putut fi deschis sau acesta nu exista:(");
     }
-    std::string title, genre, protagonist;
+    std::string title;
     int year;
     int nr=0;
-    while(fileStream>>title
-    && fileStream>>genre
-    && fileStream>>year
-    && fileStream>>protagonist){
+    std::string line;
+    while(fileStream>>line){
+        vector<std::string> splitedLine = split(line);
+        title=splitedLine[0];
+        year= stringToInt(splitedLine[2]);
         try{
             addCart(title, year);
         }catch(repoException &R){
@@ -95,7 +103,7 @@ void Service::importCart(const std::string& fileName) {
 void Service::exportCart(const std:: string& fileName) {
     std:: ofstream fileStream(fileName);
     for(const auto& movie : cart_.getAll()){
-        fileStream<<movie.title()<<" "<<movie.genre()<<" "<<movie.year()<<" "<<movie.protagonist()<<"\n";
+        fileStream<<movie.title()<<","<<movie.genre()<<","<<movie.year()<<","<<movie.protagonist()<<"\n";
     }
     fileStream.close();
 }
@@ -113,6 +121,32 @@ void Service::generateRandomCart(int num) {
         addCart(v[rndNr].title(), v[rndNr].year());
         rndNr = dist(mt);
     }
+}
+
+int Service::stringToInt(const std::string &str) {
+    int num = 0;
+    for (char c: str) {
+        if (c < '0' || c > '9')
+            throw uiException("trebuie introdus un numar!");
+        num = num * 10 + (c - '0');
+    }
+    return num;
+}
+
+vector<std::string> Service::split(const std::string &str) {
+    vector<std::string> splited;
+    std::stringstream ss;
+    ss.str("");
+    for(const char c: str){
+        if(c != ',' && c != '\0'){
+            ss<<c;
+        }else{
+            splited.push_back(ss.str());
+            ss.str("");
+        }
+    }
+    splited.push_back(ss.str());
+    return splited;
 }
 
 

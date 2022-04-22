@@ -71,6 +71,9 @@ public:
 
     void generateRandomCart(int num);
 
+    static vector<std::string> split(const std::string& str);
+
+    static int stringToInt(const std::string& std);
 };
 
 class fileException: std::exception {

@@ -24,8 +24,10 @@ void Tests::runAll() {
     delSrvTest();
     modSrvTest();
     searchSrvTest();
-//    yearFilterTest();
-//    nameFilterTest();
+    yearFilterTest();
+    nameFilterTest();
+
+    splitTest();
     std::cout<<"tests ok";
 }
 
@@ -226,3 +228,14 @@ void Tests::nameFilterTest() {
         assert(i.title() == "5");
     }
 }
+
+void Tests::splitTest() {
+    std::string str{"foo,f00,fo0,foo"};
+    vector<std::string> splited = Service::split(str);
+    assert(splited[0] == "foo");
+    assert(splited[1] == "f00");
+    assert(splited[2]== "fo0");
+    assert(splited[3] == "foo");
+}
+
+

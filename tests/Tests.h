@@ -27,7 +27,7 @@ private:
     static void searchSrvTest();
     static void nameFilterTest();
     static void yearFilterTest();
-
+    static void splitTest();
 };
 
 
