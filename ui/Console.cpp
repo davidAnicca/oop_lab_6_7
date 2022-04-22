@@ -19,6 +19,7 @@ void Console::run() {
                      "6 adauga in cos\n"
                      "7 colire cos\n"
                      "8 exporta cos || 9 importa cos\n"
+                     "10 generare cos aleatoriu\n"
                      "0 Iesire\n"
                      "Dati comanda:";
         int cmd;
@@ -53,6 +54,9 @@ void Console::run() {
                     break;
                 case 9:
                     importCart();
+                    break;
+                case 10:
+                    generateCart();
                     break;
                 case 0:
                     return;
@@ -189,6 +193,13 @@ void Console::importCart() {
     std::cin >> fileName;
     srv_.importCart(fileName);
     std::cout << "s-a importat cu succes din fisierul " << fileName << "\n";
+}
+
+void Console::generateCart() {
+    int num;
+    num = readInt();
+    srv_.generateRandomCart(num);
+    std::cout<<"s-a generat coșul cu "<<num<<" filme. :)";
 }
 
 

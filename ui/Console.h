@@ -47,7 +47,10 @@ private:
      * importa cos
      */
     void importCart();
-
+    /*
+     * genereaza cos
+     */
+    void generateCart();
 public:
     explicit Console(Service& srv): srv_{srv}{};
 

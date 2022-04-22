@@ -15,10 +15,13 @@ public:
 
 private:
     static void addGetDelTest();
+
+    static void generatorTest();
 };
 
 void cartTestSrv::runALl() {
     addGetDelTest();
+    generatorTest();
 }
 
 void cartTestSrv::addGetDelTest() {
@@ -43,4 +46,16 @@ void cartTestSrv::addGetDelTest() {
     }
     srv.emptyCart();
     assert(srv.cartSize()==0);
+}
+
+void cartTestSrv::generatorTest() {
+    Repo repo; Cart c;
+    Service srv{repo, c};
+    srv.add("EnterTheVoid", "Psy", 1990, "Oscar");
+    srv.add("LaDoubleVieDeVeroniqe", "Oniric", 1969, "Veronika");
+    srv.add("ZazieDansLeMetro", "Adventure", 1960, "PetiteZazie");
+    srv.add("LaBelleVerte", "Politc", 1970, "Marie");
+    srv.add("PortocalaMecanica", "Oniric", 1960, "Marcel");
+    srv.generateRandomCart(966);
+    assert(c.getAll().size() == 966);
 }

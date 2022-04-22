@@ -4,10 +4,12 @@
 
 #include "Service.h"
 #include "../repo/Repo.h"
-#include "algorithm"
 #include "Console.h"
 #include <utility>
 #include <fstream>
+#include <algorithm>
+#include <random> // std::default_random_engine
+#include <chrono>
 void Service::add(const std::string& title, const std::string& genre, const int year, const std::string& protagonist) {
 
     Movie m{title, genre, year, protagonist};
@@ -96,6 +98,21 @@ void Service::exportCart(const std:: string& fileName) {
         fileStream<<movie.title()<<" "<<movie.genre()<<" "<<movie.year()<<" "<<movie.protagonist()<<"\n";
     }
     fileStream.close();
+}
+
+void Service::generateRandomCart(int num) {
+    if(repo_.getAll().empty())
+        return;
+    vector<Movie> v = repo_.getAll();
+    std::mt19937 mt{ std::random_device{}() };
+    std::uniform_int_distribution<> dist(0, v.size()-1);
+    int rndNr = dist(mt);
+    int i=0;
+    while(i < num){
+        i++;
+        addCart(v[rndNr].title(), v[rndNr].year());
+        rndNr = dist(mt);
+    }
 }
 
 

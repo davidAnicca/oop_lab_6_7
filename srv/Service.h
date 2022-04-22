@@ -69,6 +69,8 @@ public:
 
     void importCart(const std::string& fileName);
 
+    void generateRandomCart(int num);
+
 };
 
 class fileException: std::exception {
