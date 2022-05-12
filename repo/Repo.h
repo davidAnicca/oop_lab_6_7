@@ -45,11 +45,12 @@ public:
 };
 
 class repoException: std::exception {
-    std::string msg;
 public:
     explicit repoException(std::string  m) : msg{std::move(m )} {}
     //functie friend (vreau sa folosesc membru privat msg)
     friend std::ostream& operator<<(std::ostream& out, const repoException& ex);
+
+    std::string msg;
 };
 
 std::ostream& operator<<(std::ostream& out, const repoException& ex);

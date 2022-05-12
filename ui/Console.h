@@ -64,15 +64,6 @@ public:
 static void printOne(const Movie &movie);
 };
 
-class uiException: std::exception {
-    std::string msg;
-public:
-    explicit uiException(std::string  m) : msg{std::move(m )} {}
-    //functie friend (vreau sa folosesc membru privat msg)
-    friend std::ostream& operator<<(std::ostream& out, const uiException& ex);
-};
-
-std::ostream& operator<<(std::ostream& out, const uiException& ex);
 
 
 #endif //HABITAT_CONSOLE_H

@@ -7,12 +7,10 @@
 #include "repo/cart/cartTest.cpp"
 #include "srv/CartTestsSrv.cpp"
 #include "undo/UndoTests.cpp"
+#include "GUI/MovieGui.h"
 #include <QApplication>
-#include <QLabel>
 
 int main(int argc, char** argv) {
-
-
     Tests::runAll();
     ///VectorTests::runAll();
     cartTest::runALl();
@@ -29,7 +27,12 @@ int main(int argc, char** argv) {
     srv.add("ZazieDansLeMetro", "Adventure", 1960, "PetiteZazie");
     srv.add("LaBelleVerte", "Politc", 1970, "Marie");
     srv.add("PortocalaMecanica", "Oniric", 1960, "Marcel");
-    Console cns{srv};
-    cns.run();
+
+    QApplication a{argc, argv};
+    MovieGui g{srv};
+    g.show();
+    a.exec();
+    ///Console cns{srv};
+    //cns.run();
     return 0;
 }

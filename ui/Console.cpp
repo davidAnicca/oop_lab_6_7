@@ -5,6 +5,7 @@
 #include <iostream>
 #include "../vector/Vector.h"
 #include "Console.h"
+#include "../utils/MyUtils.h"
 
 
 void Console::run() {
@@ -210,10 +211,7 @@ void Console::undo() {
 }
 
 
-std::ostream &operator<<(std::ostream &out, const uiException &ex) {
-    out << ex.msg;
-    return out;
-}
+
 
 
 

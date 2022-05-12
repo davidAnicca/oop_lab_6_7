@@ -31,3 +31,8 @@ std::vector<std::string> MyUtils::split(const std::string &str) {
     splited.push_back(ss.str());
     return splited;
 }
+
+std::ostream &operator<<(std::ostream &out, const uiException &ex) {
+    out << ex.msg;
+    return out;
+}

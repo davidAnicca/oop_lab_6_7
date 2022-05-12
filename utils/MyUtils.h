@@ -15,5 +15,17 @@ public:
     static int stringToInt(const std::string& std);
 };
 
+class uiException: std::exception {
+
+public:
+    std::string msg;
+    explicit uiException(std::string  m) : msg{std::move(m )} {}
+    //functie friend (vreau sa folosesc membru privat msg)
+    friend std::ostream& operator<<(std::ostream& out, const uiException& ex);
+};
+
+std::ostream& operator<<(std::ostream& out, const uiException& ex);
+
+
 
 #endif //HABITAT_MYUTILS_H
