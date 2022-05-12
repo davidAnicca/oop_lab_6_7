@@ -6,12 +6,18 @@
 #include "ui/Console.h"
 #include "repo/cart/cartTest.cpp"
 #include "srv/CartTestsSrv.cpp"
+#include "undo/UndoTests.cpp"
+#include <QApplication>
+#include <QLabel>
 
-int main() {
+int main(int argc, char** argv) {
+
+
     Tests::runAll();
     ///VectorTests::runAll();
     cartTest::runALl();
     cartTestSrv::runALl();
+    runAll();
     Repo r;
     Cart c;
     Service srv{r, c};

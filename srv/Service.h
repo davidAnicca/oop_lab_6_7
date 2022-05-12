@@ -9,6 +9,7 @@
 #include <functional>
 #include "../repo/Repo.h"
 #include "../repo/cart/Cart.h"
+#include "../undo/Undo.h"
 
 class Service {
 private:
@@ -38,7 +39,7 @@ public:
      * modifica un film gasit dupa nume si an
      * se dau noile caracteristici
      */
-    void mod(std::string title,
+    void mod(const std::string& title,
              int year,
              std::string newGenre,
              std::string newProtagonist);
@@ -71,9 +72,9 @@ public:
 
     void generateRandomCart(int num);
 
-    static vector<std::string> split(const std::string& str);
-
-    static int stringToInt(const std::string& std);
+    void undo();
+private:
+    std::stack<Undo*> undos;
 };
 
 class fileException: std::exception {

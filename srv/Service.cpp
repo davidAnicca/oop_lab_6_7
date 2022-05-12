@@ -10,11 +10,16 @@
 #include <algorithm>
 #include <random> // std::default_random_engine
 #include <chrono>
+#include "../utils/MyUtils.h"
+#include "../undo/AddUndo.h"
+#include "../undo/DeleteUndo.h"
+#include "../undo/ModUndo.h"
 #include <sstream>
 
 void Service::add(const std::string& title, const std::string& genre, const int year, const std::string& protagonist) {
 
     Movie m{title, genre, year, protagonist};
+    undos.push(new AddUndo{repo_, m});
     repo_.add(m);
 }
 
@@ -24,11 +29,13 @@ const vector<Movie>& Service::getAll() noexcept{
 
 void Service::del(const std::string& title, int year) {
     Movie m = repo_.find(title, year);
+    undos.push(new DeleteUndo{repo_, m});
     repo_.del(m);
 }
 
-void Service::mod(std::string title, int year, std::string genre, std::string protagonist) {
-    Movie m{std::move(title), std::move(genre), year, std::move(protagonist)};
+void Service::mod(const std::string& title, int year, std::string genre, std::string protagonist) {
+    Movie m{title, std::move(genre), year, std::move(protagonist)};
+    undos.push(new ModUndo{repo_, repo_.find(title, year)});
     repo_.modify(m);
 }
 
@@ -84,9 +91,9 @@ void Service::importCart(const std::string& fileName) {
     int nr=0;
     std::string line;
     while(fileStream>>line){
-        vector<std::string> splitedLine = split(line);
+        vector<std::string> splitedLine = MyUtils::split(line);
         title=splitedLine[0];
-        year= stringToInt(splitedLine[2]);
+        year= MyUtils::stringToInt(splitedLine[2]);
         try{
             addCart(title, year);
         }catch(repoException &R){
@@ -123,30 +130,12 @@ void Service::generateRandomCart(int num) {
     }
 }
 
-int Service::stringToInt(const std::string &str) {
-    int num = 0;
-    for (char c: str) {
-        if (c < '0' || c > '9')
-            throw uiException("trebuie introdus un numar!");
-        num = num * 10 + (c - '0');
-    }
-    return num;
-}
-
-vector<std::string> Service::split(const std::string &str) {
-    vector<std::string> splited;
-    std::stringstream ss;
-    ss.str("");
-    for(const char c: str){
-        if(c != ',' && c != '\0'){
-            ss<<c;
-        }else{
-            splited.push_back(ss.str());
-            ss.str("");
-        }
-    }
-    splited.push_back(ss.str());
-    return splited;
+void Service::undo() {
+    if(undos.empty())return;
+    auto& u = undos.top();
+    undos.pop();
+    u->doUndo();
+    delete u;
 }
 
 

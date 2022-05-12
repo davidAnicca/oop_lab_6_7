@@ -51,6 +51,7 @@ private:
      * genereaza cos
      */
     void generateCart();
+    void undo();
 public:
     explicit Console(Service& srv): srv_{srv}{};
 

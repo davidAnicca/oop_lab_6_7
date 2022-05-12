@@ -10,6 +10,7 @@
 #include "../entitie/Movie.h"
 #include "../repo/Repo.h"
 #include "../srv/Service.h"
+#include "../utils/MyUtils.h"
 
 
 void Tests::runAll() {
@@ -231,7 +232,7 @@ void Tests::nameFilterTest() {
 
 void Tests::splitTest() {
     std::string str{"foo,f00,fo0,foo"};
-    vector<std::string> splited = Service::split(str);
+    vector<std::string> splited = MyUtils::split(str);
     assert(splited[0] == "foo");
     assert(splited[1] == "f00");
     assert(splited[2]== "fo0");
