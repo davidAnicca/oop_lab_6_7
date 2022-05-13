@@ -7,6 +7,10 @@
 
 
 void MovieGui::initGUICmps() {
+    //cosul de cumparaturi
+
+
+
     setLayout(mainL);
     QWidget* wDreapta = new QWidget;
     QVBoxLayout* v = new QVBoxLayout;
@@ -22,6 +26,9 @@ void MovieGui::initGUICmps() {
 
     btnFilterByYear = new QPushButton("filtrare dupa an");
     lyBtnsDr->addWidget(btnFilterByYear);
+
+    btnUndo = new QPushButton("undo");
+    lyBtnsDr->addWidget(btnUndo);
 
     v->addWidget(widBtnDreapta);
     mainL->addWidget(wDreapta);
@@ -56,6 +63,17 @@ void MovieGui::initGUICmps() {
 
     btnDyn->setLayout(lyBtnDy);
     mainL->addWidget(btnDyn);
+
+    QWidget* wCos = new QWidget;
+    QVBoxLayout* cosL = new QVBoxLayout;
+    wCos->setLayout(cosL);
+    btnAddCart = new QPushButton("adauga in cos");
+    btnOpenCart = new QPushButton("vezi cos");
+    cosL->addWidget(btnAddCart);
+    cosL->addWidget(btnOpenCart);
+    mainL->addWidget(wCos);
+
+
 }
 
 void MovieGui::connectSignalsSlots() {
@@ -65,6 +83,10 @@ void MovieGui::connectSignalsSlots() {
             reloadList(service.getAll());
         }else
             reloadList(service.filterByTitle(txtTitle->text().toStdString()));
+    });
+    QObject::connect(btnUndo, &QPushButton::clicked, [&](){
+        service.undo();
+        reloadList(service.getAll());
     });
     QObject::connect(btnFilterByYear, &QPushButton::clicked, [&](){
         if(txtYear->text().toStdString() == ""){

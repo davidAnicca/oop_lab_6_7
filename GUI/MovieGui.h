@@ -33,6 +33,11 @@ private:
     QPushButton* btnDel;
     QPushButton* btnMod;
     QVBoxLayout* lyBtnDy = new QVBoxLayout;
+    QPushButton* btnUndo;
+
+    QPushButton* btnAddCart;
+    QPushButton* btnOpenCart;
+
     QWidget* btnDyn = new QWidget;
     void initGUICmps();
     void connectSignalsSlots();
