@@ -6,6 +6,7 @@
 #include "../utils/MyUtils.h"
 
 
+
 void MovieGui::initGUICmps() {
     //cosul de cumparaturi
 
@@ -66,6 +67,8 @@ void MovieGui::initGUICmps() {
 
     QWidget* wCos = new QWidget;
     QVBoxLayout* cosL = new QVBoxLayout;
+    cartLabel = new QLabel("0 produse in cos");
+    cosL->addWidget(cartLabel);
     wCos->setLayout(cosL);
     btnAddCart = new QPushButton("adauga in cos");
     btnOpenCart = new QPushButton("vezi cos");
@@ -76,7 +79,34 @@ void MovieGui::initGUICmps() {
 
 }
 
+void MovieGui::updateCartLabel(){
+    cartLabel->clear();
+    cartLabel->setText(QString::fromStdString(std::to_string(service.cartSize())+" produse in cos"));
+}
+
 void MovieGui::connectSignalsSlots() {
+    QObject::connect(btnOpenCart,
+                     &QPushButton::clicked,
+                     this,
+                     &MovieGui::openCartWindow);
+
+    QObject::connect(btnAddCart, &QPushButton::clicked, [&](){
+        try {
+            service.addCart(txtTitle->text().toStdString(),
+                            MyUtils::stringToInt(txtYear->text().toStdString()));
+            updateCartLabel();
+        }catch(uiException& e){
+            QMessageBox::warning(this,
+                                 "warning",
+                                 QString::fromStdString(e.msg));
+
+        }catch(repoException& e){
+            QMessageBox::warning(this,
+                                 "Warning",
+                                 QString::fromStdString(e.msg));
+        }
+    });
+
     QObject::connect(btnFilterByGenre, &QPushButton::clicked, [&]() {
         //qDebug() << "am ajuns aici!!!";
         if(txtTitle->text().toStdString() == ""){
@@ -158,10 +188,6 @@ void MovieGui::addNewMovie() {
     }
 }
 
-void MovieGui::adaugaButoane(const vector<Movie> &movies) {
-
-}
-
 void MovieGui::modMovie() {
     try{
         service.mod(txtTitle->text().toStdString(),
@@ -194,4 +220,9 @@ void MovieGui::delMovie() {
                              "Warning",
                              QString::fromStdString(e.msg));
     }
+}
+
+void MovieGui::openCartWindow() {
+    cartWindow = new CartGui{service};
+    cartWindow->show();
 }

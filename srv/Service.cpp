@@ -81,6 +81,7 @@ int Service::cartSize() {
 }
 
 void Service::importCart(const std::string& fileName) {
+    emptyCart();
     std::ifstream fileStream(fileName);
     if(!fileStream.is_open()){
         throw fileException("A aparut o eroare la import\n"
@@ -136,6 +137,10 @@ void Service::undo() {
     undos.pop();
     u->doUndo();
     delete u;
+}
+
+const vector<Movie> &Service::getCart() {
+    return cart_.getAll();
 }
 
 

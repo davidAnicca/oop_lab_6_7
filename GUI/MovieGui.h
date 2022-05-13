@@ -4,7 +4,7 @@
 
 #ifndef HABITAT_MOVIEGUI_H
 #define HABITAT_MOVIEGUI_H
-
+#include "CartGui.h"
 #include <QtWidgets>
 #include <QListWidget>
 #include <QPushButton>
@@ -16,7 +16,7 @@ public:
         initGUICmps();
         connectSignalsSlots();
         reloadList(service.getAll());
-        adaugaButoane(service.getAll());
+
     };
 
 private:
@@ -34,9 +34,12 @@ private:
     QPushButton* btnMod;
     QVBoxLayout* lyBtnDy = new QVBoxLayout;
     QPushButton* btnUndo;
+    QLabel* cartLabel;
 
     QPushButton* btnAddCart;
     QPushButton* btnOpenCart;
+
+    CartGui* cartWindow;
 
     QWidget* btnDyn = new QWidget;
     void initGUICmps();
@@ -45,7 +48,9 @@ private:
     void addNewMovie();
     void delMovie();
     void modMovie();
-    void adaugaButoane(const std::vector<Movie>& movies);
+
+    void updateCartLabel();
+    void openCartWindow();
 };
 
 

@@ -66,6 +66,8 @@ public:
 
     int cartSize();
 
+    const vector<Movie>& getCart();
+
     void exportCart(const std::string& fileName);
 
     void importCart(const std::string& fileName);
@@ -78,11 +80,12 @@ private:
 };
 
 class fileException: std::exception {
-    std::string msg;
 public:
     explicit fileException(std::string  m) : msg{std::move(m )} {}
     //functie friend (vreau sa folosesc membru privat msg)
     friend std::ostream& operator<<(std::ostream& out, const fileException& ex);
+
+    std::string msg;
 };
 
 std::ostream& operator<<(std::ostream& out, const fileException& ex);
