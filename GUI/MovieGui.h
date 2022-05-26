@@ -11,14 +11,12 @@
 #include "Service.h"
 #include "CartRDOnly.h"
 
-class MovieGui: public QWidget {
+class MovieGui: public QWidget, public Observer, public Observable {
 public:
     explicit MovieGui(Service& service): service{service}{
         initGUICmps();
         connectSignalsSlots();
         reloadList(service.getAll());
-        cartWindow = new CartGui(service);
-        cartRW = new CartRDOnly(*cartWindow, service);
     };
 
 private:
@@ -41,8 +39,8 @@ private:
     QPushButton* btnOpenCart;
     QPushButton* btnOpenRCart;
 
-    CartGui* cartWindow;
-    CartRDOnly* cartRW;
+    //CartGui* cartWindow;
+    //CartRDOnly* cartRW;
 
     QWidget* btnDyn = new QWidget;
     QWidget* btnDyn2 = new QWidget;
@@ -58,6 +56,10 @@ private:
     void updateCartLabel();
     void openCartWindow();
     void openCartRWindow();
+
+    void update() override{
+        notify();
+    }
 };
 
 

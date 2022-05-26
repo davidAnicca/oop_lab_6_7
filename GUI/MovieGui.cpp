@@ -74,7 +74,7 @@ void MovieGui::initGUICmps() {
     btnOpenRCart = new QPushButton("vezi produse");
     cosL->addWidget(btnAddCart);
     cosL->addWidget(btnOpenCart);
-    cosL->addWidget(btnOpenRCart);
+    ///cosL->addWidget(btnOpenRCart);
     mainL->addWidget(wCos);
 
     mainL->addWidget(btnDyn2);
@@ -220,6 +220,10 @@ void MovieGui::reloadList(const vector<Movie> &movies) {
 }
 
 void MovieGui::addNewMovie() {
+    if(txtTitle->text().isEmpty()
+    || txtGenre->text().isEmpty()
+    || txtProtagonist->text().isEmpty()
+    || txtYear->text().isEmpty())return;
     try{
         std::string title = txtTitle->text().toStdString();
         std::string genre = txtGenre->text().toStdString();
@@ -273,9 +277,13 @@ void MovieGui::delMovie() {
 }
 
 void MovieGui::openCartWindow() {
+    CartGui* cartWindow = new CartGui(service);
+    CartRDOnly* cartRW = new CartRDOnly(*cartWindow, service);
+    cartRW->show();
+    cartRW->move(1000, 100);
+    ///cartWindow->addObserver(this);
     cartWindow->show();
 }
 
 void MovieGui::openCartRWindow() {
-    cartRW->show();
 }

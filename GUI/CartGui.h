@@ -13,6 +13,7 @@
 class CartGui : public QWidget, public Observable{
 public:
     explicit CartGui(Service& service): service{service}{
+        setAttribute(Qt::WA_DeleteOnClose);
         init();
         connectSig();
         reloadList(service.getCart());
