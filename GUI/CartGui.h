@@ -10,13 +10,14 @@
 #include <QtWidgets>
 #include "Observer.h"
 
-class CartGui : public QWidget, public Observable{
+class CartGui : public QWidget, public Observer{
 public:
     explicit CartGui(Service& service): service{service}{
         setAttribute(Qt::WA_DeleteOnClose);
         init();
         connectSig();
         reloadList(service.getCart());
+        service.addObserver(this);
     }
 
 private:
@@ -35,6 +36,13 @@ private:
     void init();
     void connectSig();
     void reloadList(const std::vector<Movie>& movies);
+    void update() override{
+        reloadList(service.getCart());
+    }
+    void closeEvent(QCloseEvent* ev) override{
+        service.removeObserver(this);
+        ev->accept();
+    };
 };
 
 

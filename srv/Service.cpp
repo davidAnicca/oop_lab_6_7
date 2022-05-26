@@ -70,10 +70,12 @@ vector<Movie> Service::filterByTitle(const std::string& title) const{
 void Service::addCart(const std::string &title, int year) {
     Movie m = repo_.find(title, year);
     cart_.add(m);
+    notify();
 }
 
 void Service::emptyCart() {
     cart_.del();
+    notify();
 }
 
 int Service::cartSize() {
@@ -106,6 +108,7 @@ void Service::importCart(const std::string& fileName) {
         throw fileException("cateva filme nu au putut fi adaugate\n"
                             "cel mai probabil ele nu mai exista în magazin");
     }
+    notify();
 }
 
 void Service::exportCart(const std:: string& fileName) {
@@ -129,6 +132,7 @@ void Service::generateRandomCart(int num) {
         addCart(v[rndNr].title(), v[rndNr].year());
         rndNr = dist(mt);
     }
+    notify();
 }
 
 void Service::undo() {

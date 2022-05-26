@@ -278,7 +278,7 @@ void MovieGui::delMovie() {
 
 void MovieGui::openCartWindow() {
     CartGui* cartWindow = new CartGui(service);
-    CartRDOnly* cartRW = new CartRDOnly(*cartWindow, service);
+    CartRDOnly* cartRW = new CartRDOnly(service);
     cartRW->show();
     cartRW->move(1000, 100);
     ///cartWindow->addObserver(this);

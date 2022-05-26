@@ -12,13 +12,13 @@
 #include <QtWidgets>
 
 class CartRDOnly: public QWidget, public Observer {
-    CartGui& mainC;
+    ///CartGui& mainC;
     Service& srv;
     QLabel* howMany = new QLabel("");
     QWidget* paintZOne = new QWidget();
     QVBoxLayout* mainL  = new QVBoxLayout;
 public:
-    CartRDOnly(CartGui& mainC, Service& srv):mainC{mainC}, srv{srv}{
+    explicit CartRDOnly(Service& srv):srv{srv}{
         setAttribute(Qt::WA_DeleteOnClose);
         init();
 
@@ -28,7 +28,7 @@ public:
         repaint();
     }
     void init(){
-        mainC.addObserver(this);
+        srv.addObserver(this);
         setLayout(mainL);
         setFixedSize(500, 500);
         ///mainL->setGeometry(QRect(100, 100, 100, 100));
@@ -38,6 +38,10 @@ public:
     };
     void paintEvent(QPaintEvent* ev) override;
     int randomPoz();
+    void closeEvent(QCloseEvent* ev) override{
+        srv.removeObserver(this);
+        ev->accept();
+    };
 
 };
 

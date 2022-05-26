@@ -10,8 +10,9 @@
 #include "../repo/Repo.h"
 #include "../repo/cart/Cart.h"
 #include "../undo/Undo.h"
+#include "../GUI/Observer.h"
 
-class Service {
+class Service: public Observable {
 private:
     Repo &repo_;
     Cart &cart_;
