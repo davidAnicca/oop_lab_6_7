@@ -8,8 +8,9 @@
 #include "../srv/Service.h"
 #include <QWidget>
 #include <QtWidgets>
+#include "Observer.h"
 
-class CartGui : public QWidget{
+class CartGui : public QWidget, public Observable{
 public:
     explicit CartGui(Service& service): service{service}{
         init();

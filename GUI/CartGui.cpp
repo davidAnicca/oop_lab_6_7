@@ -11,6 +11,7 @@ void CartGui::connectSig() {
                      [&](){
         service.emptyCart();
         reloadList(service.getCart());
+        notify();
     });
 
     QObject::connect(btnClose,
@@ -29,6 +30,7 @@ void CartGui::connectSig() {
         try {
             service.importCart(filePath);
             reloadList(service.getCart());
+            notify();
         }catch(fileException& e){
             QMessageBox::warning(this,
                                  "warning",
@@ -45,6 +47,7 @@ void CartGui::connectSig() {
                     ));
             txtGenerate->setText("");
             reloadList(service.getCart());
+            notify();
         }catch(uiException& e){
             QMessageBox::warning(this,
                                  "Warning",
@@ -61,6 +64,7 @@ void CartGui::connectSig() {
         try {
             service.exportCart(filePath);
             reloadList(service.getCart());
+            notify();
         }catch(fileException& e){
             QMessageBox::warning(this,
                                  "warning",

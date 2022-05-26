@@ -9,6 +9,7 @@
 #include <QListWidget>
 #include <QPushButton>
 #include "Service.h"
+#include "CartRDOnly.h"
 
 class MovieGui: public QWidget {
 public:
@@ -16,7 +17,8 @@ public:
         initGUICmps();
         connectSignalsSlots();
         reloadList(service.getAll());
-
+        cartWindow = new CartGui(service);
+        cartRW = new CartRDOnly(*cartWindow, service);
     };
 
 private:
@@ -35,13 +37,16 @@ private:
     QVBoxLayout* lyBtnDy = new QVBoxLayout;
     QPushButton* btnUndo;
     QLabel* cartLabel;
-
     QPushButton* btnAddCart;
     QPushButton* btnOpenCart;
+    QPushButton* btnOpenRCart;
 
     CartGui* cartWindow;
+    CartRDOnly* cartRW;
 
     QWidget* btnDyn = new QWidget;
+    QWidget* btnDyn2 = new QWidget;
+    QHBoxLayout* btnDynL = new QHBoxLayout;
     void initGUICmps();
     void connectSignalsSlots();
     void reloadList(const std::vector<Movie>& movies);
@@ -49,8 +54,10 @@ private:
     void delMovie();
     void modMovie();
 
+    void addButtons(const std::vector<Movie> &movies);
     void updateCartLabel();
     void openCartWindow();
+    void openCartRWindow();
 };
 
 

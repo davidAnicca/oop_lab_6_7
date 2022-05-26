@@ -53,7 +53,6 @@ void MovieGui::initGUICmps() {
     form->addWidget(protagonist);
     txtProtagonist = new QLineEdit;
     form->addRow(txtProtagonist);
-
     btnAdd = new QPushButton("Adauga");
     btnDel = new QPushButton("Sterge");
     btnMod = new QPushButton("Modificare");
@@ -72,11 +71,14 @@ void MovieGui::initGUICmps() {
     wCos->setLayout(cosL);
     btnAddCart = new QPushButton("adauga in cos");
     btnOpenCart = new QPushButton("vezi cos");
+    btnOpenRCart = new QPushButton("vezi produse");
     cosL->addWidget(btnAddCart);
     cosL->addWidget(btnOpenCart);
+    cosL->addWidget(btnOpenRCart);
     mainL->addWidget(wCos);
 
-
+    mainL->addWidget(btnDyn2);
+    btnDyn2->setLayout(btnDynL);
 }
 
 void MovieGui::updateCartLabel(){
@@ -89,6 +91,11 @@ void MovieGui::connectSignalsSlots() {
                      &QPushButton::clicked,
                      this,
                      &MovieGui::openCartWindow);
+
+    QObject::connect(btnOpenRCart,
+                     &QPushButton::clicked,
+                     this,
+                     &MovieGui::openCartRWindow);
 
     QObject::connect(btnAddCart, &QPushButton::clicked, [&](){
         try {
@@ -140,6 +147,7 @@ void MovieGui::connectSignalsSlots() {
                      &MovieGui::modMovie);
 
     QObject::connect(btnAdd, &QPushButton::clicked, this, &MovieGui::addNewMovie);
+
     QObject::connect(lst, &QListWidget::itemSelectionChanged, [&](){
         auto sel = lst->selectedItems();
         if(sel.isEmpty()){
@@ -160,6 +168,47 @@ void MovieGui::connectSignalsSlots() {
     });
 }
 
+void clearLayout(QLayout* layout, bool deleteWidgets = true)
+{
+    while (QLayoutItem* item = layout->takeAt(0))
+    {
+        if (deleteWidgets)
+        {
+            if (QWidget* widget = item->widget())
+                widget->deleteLater();
+        }
+        if (QLayout* childLayout = item->layout())
+            clearLayout(childLayout, deleteWidgets);
+        delete item;
+    }
+}
+
+void MovieGui::addButtons(const std::vector<Movie> &movies){
+    std::vector<std::string> genres;
+    for(const auto& m: movies){
+        bool gasit = false;
+        for(auto& g: genres){
+            if(g == m.genre())gasit = true;
+        }
+        if(!gasit){
+            genres.push_back(m.genre());
+        }
+    }
+    clearLayout(btnDynL);
+    for(auto& g: genres){
+        QPushButton* but = new QPushButton{QString::fromStdString(g)};
+        btnDynL->addWidget(but);
+        QObject::connect(but, &QPushButton::clicked, [but, this](){
+            vector<Movie> v;
+            for(auto& m : service.getAll()){
+                if(m.genre() == but->text().toStdString())
+                    v.push_back(m);
+            }
+            reloadList(v);
+        });
+    }
+}
+
 void MovieGui::reloadList(const vector<Movie> &movies) {
     lst->clear();
     for (const auto& m : movies) {
@@ -167,6 +216,7 @@ void MovieGui::reloadList(const vector<Movie> &movies) {
         item->setData(Qt::UserRole, QString::fromStdString(std::to_string(m.year())));
         lst->addItem(item);
     }
+    addButtons(movies);
 }
 
 void MovieGui::addNewMovie() {
@@ -223,6 +273,9 @@ void MovieGui::delMovie() {
 }
 
 void MovieGui::openCartWindow() {
-    cartWindow = new CartGui{service};
     cartWindow->show();
+}
+
+void MovieGui::openCartRWindow() {
+    cartRW->show();
 }
